@@ -53,8 +53,25 @@ function updateHappinessMeter(happiness) {
     color = '#ff9800'; // Orange color for moderate happiness
   } else if (happiness < 0.6) {
     color = '#ffc107'; // Yellow color for medium happiness
+  }else if (happiness < 0.8) {
+    color = '#8bc34a';
+  }else if (happiness === 0.9 || happiness === 1) {
+    takeScreenshot();
+    color = '#4caf50';
   }
 
   happinessMeter.style.width = `${maxWidth * happiness}px`;
   meterFill.style.backgroundColor = color;
+}
+
+function takeScreenshot() {
+  const canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  const img = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.download = 'happiness_screenshot.png';
+  link.href = img;
+  link.click();
 }
