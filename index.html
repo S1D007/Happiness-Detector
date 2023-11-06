@@ -1,69 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script defer src="face-api.min.js"></script>
-  <script defer src="script.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script defer src="face-api.min.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: #fff;
+      }
 
-    canvas {
-      position: absolute;
-    }
+      canvas {
+        position: absolute;
+      }
 
-    video {
-      width: 720px;
-      height: 560px;
-    }
+      video {
+        width: 720px;
+        height: 560px;
+      }
 
-    #loader {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(255, 255, 255, 0.7);
-      z-index: 1;
-    }
+      #loader {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 1;
+      }
 
-    #happiness-meter {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background-color: #f3f3f3;
-      border: 1px solid #ddd;
-      width: 200px;
-      height: 20px;
-    }
+      #happiness-meter {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: #cdcdcd;
+        border: 1px solid #ddd;
+        width: 200px;
+        height: 20px;
+        border-radius: 20px;
+      }
 
-    #meter-fill {
-      height: 100%;
-      background-color: #4caf50;
-      width: 0;
-    }
-  </style>
-</head>
-<body>
-  <div id="loader">
-    <!-- Add your loader animation here -->
-    Loading...
-  </div>
-  <video id="video" width="720" height="560" autoplay muted></video>
-  <div id="happiness-meter">
-    <div id="meter-fill"></div>
-  </div>
-</body>
+      #meter-fill {
+        height: 100%;
+        background-color: #4caf50;
+        width: 0;
+        border-radius: 20px;
+      }
+
+      #sidebar {
+        position: absolute;
+        top: 50px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      /* Your existing styles for sidebar images */
+      .sidebar-image {
+        width: 150px;
+        height: 100px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+
+      #active-image-container {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        display: none;
+        z-index: 2;
+      }
+
+      #active-image {
+        max-width: 400px;
+        max-height: 400px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="https://www.gokapture.com/img/gokapture/favicon.png" class="h-24 absolute top-10 right-50" />
+    <div class="text-xl text-black font-medium" id="loader">Loading...</div>
+    <video class="" id="video" width="720" height="560" autoplay muted></video>
+    <div id="happiness-meter">
+      <div id="meter-fill"></div>
+    </div>
+    <div id="sidebar"></div>
+    <div id="active-image-container">
+      <img id="active-image" />
+      <div class="flex justify-center items-center space-x-4 flex-row" >
+        <img
+        src="https://icons.veryicon.com/png/o/miscellaneous/iview30-ios-style/ios-close-circle-6.png"
+        class="h-14 w-14"
+        onclick="closeActiveImage()"
+        />
+        <a id="download-link" download="image.png"
+        ><img
+        src="https://static.thenounproject.com/png/4664218-200.png"
+        class="h-14 w-14"
+        /></a>
+      </div>
+    </div>
+  </body>
 </html>
